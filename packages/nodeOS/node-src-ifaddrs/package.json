@@ -1,0 +1,11 @@
+{
+  "name": "src-ifaddrs",
+  "version": "0.0.0",
+  "description": "Wrappers for ioctl",
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "license": "MIT",
+  "main": "build/Release/binding.node",
+  "dependencies": {
+    "nan": "^2.0.9"
+  }
+}
