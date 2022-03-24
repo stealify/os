@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/nogit
+	branch = master
+	commit = 9fc6504ddcb91794dfb3f39cad846cc1e9b9336c
+	parent = 0c53e86f3274ab5975d41af11cbb9b9015949678
+	method = merge
+	cmdver = 0.4.3
