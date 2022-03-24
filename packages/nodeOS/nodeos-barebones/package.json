@@ -1,0 +1,44 @@
+{
+  "name": "nodeos-barebones",
+  "version": "1.0.0-RC3.1",
+  "scripts": {
+    "BigRedButton": "scripts/BigRedButton",
+    "build": "scripts/build",
+    "prebuild": "scripts/prebuild",
+    "install": "prebuild-install -d https://github.com/NodeOS/nodeos-barebones/releases/download/v{version}/{platform}-{arch}.tar.gz || (buildDependencies && npm run build)",
+    "start": "scripts/start",
+    "test": "scripts/test",
+    "unbuild": "scripts/unbuild"
+  },
+  "author": "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "builddependencies": "^0.0.2",
+    "prebuild-install": "^2.2.2"
+  },
+  "buildDependencies": [
+    "barebonesos-linux",
+    "download-manager",
+    "nodeos-nodejs"
+  ],
+  "devDependencies": {
+    "barebonesos-linux": "^1.1.1",
+    "ci-publish": "^1.3.0",
+    "download-manager": "^0.1.4",
+    "minimist": "^1.2.0",
+    "nodeos-cross-toolchain": "^1.0.0-RC3.1",
+    "nodeos-nodejs": "^9.9.0",
+    "prebuild": "^7.4.0",
+    "qemu": "^2.9.0",
+    "suppose": "^0.6.2"
+  },
+  "description": "Generate a NodeOS barebones image",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NodeOS/nodeos-barebones.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NodeOS/nodeos-barebones/issues"
+  },
+  "homepage": "https://github.com/NodeOS/nodeos-barebones"
+}

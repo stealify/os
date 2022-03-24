@@ -1,0 +1,8 @@
+.vagga/
+deps/
+out/
+node_modules/
+
+build/
+npm-debug.log
+prebuilds/
