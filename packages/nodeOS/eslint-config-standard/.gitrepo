@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/eslint-config-standard
+	branch = master
+	commit = 573083ebd32dc5159eba4e66b6b7e328d3147f61
+	parent = 00e6b27a8f416f97df034fc0aa63a27dff9cf676
+	method = merge
+	cmdver = 0.4.3
