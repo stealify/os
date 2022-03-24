@@ -1,0 +1,62 @@
+{
+  "name": "nodeos-mount",
+  "description": "Async mount / umount system devices",
+  "main": "./mount",
+  "os": [
+    "linux",
+    "darwin",
+    "!win32"
+  ],
+  "keywords": [
+    "mount",
+    "linux",
+    "device",
+    "async"
+  ],
+  "version": "0.3.2",
+  "homepage": "https://github.com/NodeOS/nodeos-mount",
+  "bugs": "https://github.com/NodeOS/nodeos-mount/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/NodeOS/nodeos-mount.git"
+  },
+  "engines": {
+    "node": ">= 4"
+  },
+  "author": "George Kotchlamazashvili <georgedot@gmail.com>",
+  "contributors": [
+    {
+      "name": "Justas Brazauskas",
+      "email": "brazauskasjustas@gmail.com"
+    },
+    {
+      "name": "Patrick Stapfer",
+      "email": "p.stapfer@deadlock.at",
+      "url": "http://www.deadlock.at"
+    },
+    {
+      "name": "Jesús Leganés Combarro 'piranna'",
+      "email": "piranna@gmail.com",
+      "url": "http://pirannafs.blogspot.com"
+    }
+  ],
+  "scripts": {
+    "test": "grunt test"
+  },
+  "license": "MIT",
+  "gypfile": true,
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "async": "^2.5.0",
+    "nan": "^2.6.2"
+  },
+  "devDependencies": {
+    "mocha": "~3.5.0",
+    "chai": "~4.1.1",
+    "grunt": "~1.0.1",
+    "grunt-mocha-test": "~0.13.2",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-node-gyp": "~4.0.0",
+    "q": "~1.5.0"
+  }
+}
