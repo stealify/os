@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+if [[ -z $JOBS ]]; then
+  JOBS=$((`getconf _NPROCESSORS_ONLN` + 1))
+fi
+
+#
+# Download dtc
+#
+
+if [[ ! -d dtc ]]; then
+  git clone git://git.qemu-project.org/dtc.git || exit 1
+fi
+
+#
+# Build qemu
+#
+
+TARGET_LIST=arm-softmmu,i386-softmmu,x86_64-softmmu,arm-linux-user,i386-linux-user,x86_64-linux-user
+
+./configure --prefix=`pwd`/usr         \
+            --target-list=$TARGET_LIST \
+            --disable-docs             \
+            --disable-vnc              \
+            --enable-sdl               || exit 2
+
+make -j$JOBS &&
+make install || exit 3
+
+ln -sf ../usr/bin/qemu-arm           \
+       ../usr/bin/qemu-i386          \
+       ../usr/bin/qemu-system-arm    \
+       ../usr/bin/qemu-system-i386   \
+       ../usr/bin/qemu-system-x86_64 \
+       ../usr/bin/qemu-x86_64 bin    || exit 4
+
+#
+# Pack qemu in a node-gyp compatible way
+#
+
+OS="`uname`"
+case $OS in
+  'Linux')     PLATFORM=linux   ;;
+  'FreeBSD')   PLATFORM=freebsd ;;
+  'WindowsNT') PLATFORM=win     ;;
+  'Darwin')    PLATFORM=mac     ;;
+  'SunOS')     PLATFORM=solaris ;;
+  'AIX')       PLATFORM=linux   ;;
+
+  *)
+    echo Unknown OS "$OS"
+    exit 5
+  ;;
+esac
+
+MACHINE="`uname -m`"
+case $MACHINE in
+  'x86_64') ARCH=x64 ;;
+
+  *)
+    echo Unknown MACHINE "$MACHINE"
+    exit 6
+  ;;
+esac
+
+
+
+mkdir -p prebuilds                                          &&
+tar -cf - bin usr | gzip > prebuilds/$PLATFORM-$ARCH.tar.gz || exit 7
+
+#
+# Upload release to GitHub
+#
+
+if [ "$GITHUB_TOKEN" ]; then
+  prebuild --upload-all $GITHUB_TOKEN || exit 8
+fi

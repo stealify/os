@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/qemu
+	branch = raspi
+	commit = a4986b484917d3bf4a542c23df9202dadb634ed5
+	parent = c7ba6ac00e59a35aaa820dd3e71b9d8d7ba704fc
+	method = merge
+	cmdver = 0.4.3

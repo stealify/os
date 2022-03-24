@@ -1,0 +1,38 @@
+{
+  "name": "qemu",
+  "version": "2.5.50",
+  "description": "generic and open source machine emulator and virtualizer",
+  "bin": {
+    "qemu-arm": "bin/qemu-arm",
+    "qemu-i386": "bin/qemu-i386",
+    "qemu-system-arm": "bin/qemu-system-arm",
+    "qemu-system-i386": "bin/qemu-system-i386",
+    "qemu-system-x86_64": "bin/qemu-system-x86_64",
+    "qemu-x86_64": "bin/qemu-x86_64"
+  },
+  "main": "index.js",
+  "scripts": {
+    "BigRedButton": "scripts/BigRedButton",
+    "install": "prebuild --download https://github.com/NodeOS/qemu/releases/download/v{version}/{platform}-{arch}.tar.gz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeOS/qemu.git"
+  },
+  "keywords": [
+    "emulator",
+    "x86"
+  ],
+  "author": "Fabrice Bellard and the QEMU team",
+  "contributors": [
+    "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>"
+  ],
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/NodeOS/qemu/issues"
+  },
+  "homepage": "https://github.com/NodeOS/qemu#readme",
+  "dependencies": {
+    "prebuild": "piranna/prebuild"
+  }
+}
