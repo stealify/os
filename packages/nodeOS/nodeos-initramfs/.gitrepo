@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/nodeos-initramfs
+	branch = master
+	commit = 90190c91bcfcb69e48e73e95f20303b81cb49baf
+	parent = 52aee5c9cdb81ad1526293cc1c84c58048d68add
+	method = merge
+	cmdver = 0.4.3

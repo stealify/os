@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# This script should generate all the possible build combinations of
+# `nodeos-initramfs` and test them by being able to exec a Node.js REPL. In some
+# cases this could not be fully possible and so the tests should be improved in
+# the future
+
+
+BUILD="npm run build --no-spin"
+TEST="npm test"
+
+
+TOOLCHAIN=`node -p "require('nodeos-cross-toolchain')"`
+
+source $TOOLCHAIN/scripts/adjustEnvVars.sh || exit $?
+
+
+NODE_PLATFORM=linux
+
+
+#
+# Pack `nodeos-initramfs` in a node-gyp compatible way
+#
+function pack-prebuild {
+  # TODO use Node.js arch instead of explicit CPUs
+
+  STEP_DIR=prebuilds/$NODE_PLATFORM-$NODE_ARCH.tar.gz
+
+  mkdir -p `dirname $STEP_DIR`                     &&
+  tar -cf - out/$CPU out/latest | gzip > $STEP_DIR || err 50
+}
+
+
+( export MACHINE=pc BITS=32 ; $BUILD && $TEST && pack-prebuild ) || exit 1
+( export MACHINE=pc BITS=64 ; $BUILD && $TEST && pack-prebuild ) || exit 2
+( export MACHINE=raspi2     ; $BUILD          && pack-prebuild ) || exit 3
+
+
+#
+# Upload release to GitHub
+#
+
+if [ "$BRANCH_NAME" = "master" ]; then
+  if [ "$GITHUB_TOKEN" ]; then
+    prebuild --upload-all $GITHUB_TOKEN || exit 10
+  fi
+
+  if [ "$NPM_TOKEN" ]; then
+    ci-publish
+  fi
+fi
