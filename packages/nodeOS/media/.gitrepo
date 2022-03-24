@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/media
+	branch = master
+	commit = 3c964762bc0d5c84daecec4c997108ae1afceb3c
+	parent = da5ba38b88ba52360b62714e3c4dac32723d7acb
+	method = merge
+	cmdver = 0.4.3
