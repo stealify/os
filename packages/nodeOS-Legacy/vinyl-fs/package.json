@@ -27,7 +27,7 @@
     "vinyl": "^1.0.0"
   },
   "devDependencies": {
-    "buffer-equal": "0.0.1",
+    "buffer-equal": "0.0.2",
     "del": "2.2.2",
     "eslint": "1.10.3",
     "eslint-config-gulp": "2.1.0",
