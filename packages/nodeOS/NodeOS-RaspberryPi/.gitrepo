@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/NodeOS-RaspberryPi
+	branch = master
+	commit = 8ca5a950f614a5c3683dab63c4f49ed51acd5aeb
+	parent = 34854290f548a037722fd9acbb768c1f554274dc
+	method = merge
+	cmdver = 0.4.3
