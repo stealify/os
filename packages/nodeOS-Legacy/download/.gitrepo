@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/download
+	branch = master
+	commit = e405ae2b6bce31dd8220d0154bbe9964d5a66fb3
+	parent = 058b9852ab49d3cef621def0441b3336a9debd56
+	method = merge
+	cmdver = 0.4.3
