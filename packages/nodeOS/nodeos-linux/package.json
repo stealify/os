@@ -1,0 +1,37 @@
+{
+  "name": "nodeos-linux",
+  "version": "4.16.1",
+  "description": "Downloads and patch Linux kernel source code to use in NodeOS",
+  "author": "Josh Garde <joshgarde@gmail.com>",
+  "contributors": [
+    "Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "ci": "buho-SemaphoreCI",
+    "install": "scripts/install.js",
+    "lint": "nodeos-standard",
+    "test": "grep nodeos linux/include/linux/linux_logo.h -q"
+  },
+  "dependencies": {
+    "download-manager": "^0.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeOS/nodeos-linux.git"
+  },
+  "devDependencies": {
+    "buho": "^0.3.4",
+    "nodeos-standard": "^0.3.0"
+  },
+  "buho": {
+    "sha256": "0c3c5f5aae95f81322dd0b289cf8e203d35a9684454ce5a0ab98fa56faec1320",
+    "type": "DirectoryIndex",
+    "url": "https://cdn.kernel.org/pub/linux/kernel/v4.x"
+  },
+  "bugs": {
+    "url": "https://github.com/NodeOS/nodeos-linux/issues"
+  },
+  "homepage": "https://github.com/NodeOS/nodeos-linux#readme",
+  "main": "index.js"
+}
