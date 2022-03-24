@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/genfatfs
+	branch = master
+	commit = d69ce0d94aa4b7e37e2aa9d0e5e8e64cb81e5533
+	parent = 1bc9c24478c40bc4729d45de5b019dc53d9d4282
+	method = merge
+	cmdver = 0.4.3
