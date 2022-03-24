@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+npm run build -- -M pc -b 32 && npm test || exit 1
+npm run build -- -M pc -b 64 && npm test || exit 2
+npm run build -- -M raspi2   && npm test || exit 3
+
+
+#
+# Upload release to GitHub
+#
+
+if [ "$GITHUB_TOKEN" ]; then
+  prebuild --upload-all $GITHUB_TOKEN || exit 20
+fi

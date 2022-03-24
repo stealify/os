@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+
+NODEJS_VERSION=v`node -p "require('./package.json').version"`
+NODEJS_BASE_URL=http://nodejs.org/dist/$NODEJS_VERSION
+
+NODEJS_URL=$NODEJS_BASE_URL/node-$NODEJS_VERSION.tar.gz
+NODEJS_SHA256_URL="$NODEJS_BASE_URL/SHASUMS256.txt"
+
+
+TOOLCHAIN=`node -p "require('nodeos-cross-toolchain')"`
+source $TOOLCHAIN/scripts/adjustEnvVars.sh || exit $?
+
+PATH=$TOOLCHAIN/bin:$PATH
+
+
+# Build cross-compiler (if needed)
+(
+  cd $TOOLCHAIN
+  BITS=$BITS CPU=$CPU MACHINE=$MACHINE npm install --production || exit $?
+) || exit $?
+
+
+if [[ -z $OS ]]; then
+  OS="`uname`"
+fi
+
+case $OS in
+  'AIX')       NODE_PLATFORM=aix     ;;
+#  'Android')   NODE_PLATFORM=android ;;
+  'Darwin')    NODE_PLATFORM=mac     ;;
+  'FreeBSD')   NODE_PLATFORM=freebsd ;;
+  'Linux')     NODE_PLATFORM=linux   ;;
+#  'OpenBSD')   NODE_PLATFORM=Openbsd ;;
+  'SunOS')     NODE_PLATFORM=solaris ;;
+  'WindowsNT') NODE_PLATFORM=win     ;;
+
+  *)
+    echo Unknown OS "$OS"
+    exit 2
+  ;;
+esac
+
+
+#
+# Define steps paths
+#
+
+TAR_FILE=`pwd`/deps/node-$NODEJS_VERSION.tar.gz
+SRC_DIR=`pwd`/deps/node
+OBJ_DIR=build/$NODE_ARCH
+OUT_DIR=`pwd`
+PRODUCTS=(bin include share)
+PREBUILD=prebuilds/$NODE_PLATFORM-$NODE_ARCH.tar.gz
+
+
+#
+# Download Node.js
+#
+
+STEP_DIR=$TAR_FILE
+
+if [[ ! -f $STEP_DIR ]]; then
+  rmStep $SRC_DIR
+
+  (
+    DIR=`dirname $STEP_DIR`
+
+    mkdir -p $DIR && cd $DIR || exit 3
+
+    wget $NODEJS_URL || exit 4
+
+    # Check downloaded file
+    curl $NODEJS_SHA256_URL | sha256sum -c --ignore-missing --status || exit 5
+  ) || err $?
+fi
+
+
+#
+# Decompress Node.js
+#
+
+STEP_DIR=$SRC_DIR
+
+if [[ ! -d $STEP_DIR ]]; then
+  mkdir -p $STEP_DIR || exit 5
+
+  rmStep $OBJ_DIR
+
+  tar -xzf $TAR_FILE --strip-components=1 -C $STEP_DIR || err 6
+fi
+
+
+#
+# Build Node.js
+#
+
+STEP_DIR=$OBJ_DIR
+
+if [[ ! -d $STEP_DIR ]]; then
+  rmStep $PREBUILD bin/$CPU include share var
+
+  (
+    mkdir -p $STEP_DIR #&&
+#    cd       $STEP_DIR || exit 7
+    cd $SRC_DIR && $MAKE clean  # Node.js don't support out-of-tree builds yet
+
+    # Configure
+#    CROSS_COMPILE="$TARGET-"     \
+    CC=$TARGET-gcc               \
+    CXX=$TARGET-g++              \
+    $SRC_DIR/configure           \
+        --prefix=$OUT_DIR        \
+        --dest-cpu=$NODE_ARCH    \
+        --dest-os=$NODE_PLATFORM \
+        --without-dtrace         \
+        --without-intl           \
+        --without-npm            \
+        --without-snapshot       || exit 8
+
+    make -j$JOBS &&
+    make install || exit 9
+  ) || err $?
+
+  mv bin/node bin/$CPU   &&
+  ln -s $CPU bin/node    &&
+  $TARGET-strip bin/node || exit 10
+fi
+
+
+#
+# Pack Node.js in a node-gyp compatible way
+#
+
+STEP_DIR=$PREBUILD
+
+mkdir -p `dirname $STEP_DIR`                &&
+tar -cf - ${PRODUCTS[@]} | gzip > $STEP_DIR || err 11
