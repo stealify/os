@@ -1,0 +1,13 @@
+{
+  "name": "bin-ip",
+  "version": "0.0.0",
+  "description": "Stub for Docker Compatability",
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "src-sockios": "NodeOS/sockios"
+  },
+  "bin": {
+    "ip": "ip.js"
+  }
+}
