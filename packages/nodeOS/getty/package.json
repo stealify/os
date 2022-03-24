@@ -1,0 +1,27 @@
+{
+  "name": "@nodeos/getty",
+  "version": "0.0.0",
+  "description": "NodeOS getty terminal controller replacement",
+  "dependencies": {
+    "unistd": "^0.0.0",
+    "@nodeos/termios": "^0.0.0"
+  },
+  "bin": {
+    "getty": "server.js"
+  },
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeOS/getty.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NodeOS/getty/issues"
+  },
+  "homepage": "https://github.com/NodeOS/getty#readme"
+}
