@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/node-dhcpjs
+	branch = master
+	commit = 154120cb3b1e89e31f87b580711727f761554dea
+	parent = 449fb995f4a13206e3a73f254784e05ef0404a5e
+	method = merge
+	cmdver = 0.4.3
