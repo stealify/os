@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/PalmTree
+	branch = master
+	commit = b3c6d411f4464913e0030089eabd9703765b3186
+	parent = 24fed3b5d1a0ce064c99dcc44f6d3ef5f7ac520d
+	method = merge
+	cmdver = 0.4.3
