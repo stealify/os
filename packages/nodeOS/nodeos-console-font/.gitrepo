@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/nodeos-console-font
+	branch = master
+	commit = 4f6df6a2629ed34c781b40f752a787767ee757b9
+	parent = 0a949903bc6a7347f831b6cf09e60d855d9b025d
+	method = merge
+	cmdver = 0.4.3
