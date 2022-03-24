@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/NodeOS-Illumos
+	branch = master
+	commit = a60fba9d5c5cbc256f9b61267698b3d5093dc0f9
+	parent = 0287a8b417a2edb45adf1ba180dee4f8935fb725
+	method = merge
+	cmdver = 0.4.3
