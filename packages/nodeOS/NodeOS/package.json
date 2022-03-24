@@ -35,18 +35,18 @@
   "homepage": "http://node-os.com",
   "private": true,
   "dependencies": {
-    "nodeos-barebones": "^1.0.0-RC3.1",
+    "nodeos-barebones": "1.0.0-RC3.1",
     "nodeos-initramfs": "NodeOS/nodeos-initramfs",
     "nodeos-usersfs": "NodeOS/nodeos-usersfs"
   },
   "devDependencies": {
-    "cpio2tar": "^0.0.5",
-    "minimist": "^1.2.0",
+    "cpio2tar": "0.0.5",
+    "minimist": "1.2.6",
     "nodeos-bootfs": "NodeOS/nodeos-bootfs",
-    "nodeos-cross-toolchain": "^1.0.0-RC3.1",
+    "nodeos-cross-toolchain": "1.0.0-RC3.1",
     "prebuild": "piranna/prebuild#prerelease",
-    "qemu": "^2.9.0",
+    "qemu": "2.12.0",
     "suppose": "jprichardson/node-suppose",
-    "tar2ext": "^0.0.2"
+    "tar2ext": "0.0.2"
   }
 }

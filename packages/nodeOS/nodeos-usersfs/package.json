@@ -34,8 +34,8 @@
     "slap"
   ],
   "dependencies": {
-    "builddependencies": "^0.0.1",
-    "prebuild-install": "^2.1.2"
+    "builddependencies": "0.0.1",
+    "prebuild-install": "2.5.3"
   },
   "buildDependencies": [
     "bin-man",
@@ -59,29 +59,29 @@
     "slap"
   ],
   "devDependencies": {
-    "bin-man": "^0.2.0",
-    "ci-publish": "^1.3.0",
-    "davius": "^0.0.1",
-    "dhcpjs": "^0.6.0",
+    "bin-man": "0.2.0",
+    "ci-publish": "1.3.1",
+    "davius": "0.0.1",
+    "dhcpjs": "0.6.0",
     "ifconfig": "NodeOS/ifconfig",
     "ip": "NodeOS/ip",
-    "loadtest": "^2.3.0",
-    "logon": "^0.1.4",
-    "@nodeos/getty": "^0.0.0",
-    "node-wget": "^0.4.2",
-    "nodeos-cross-toolchain": "^1.0.0-RC3.1",
-    "nodeos-nodejs": "^8.4.0",
-    "nodeos-reverse-proxy": "^0.1.1",
-    "npm": "^5.8.0",
-    "bin-nsh": "^0.5.2",
-    "ntp-client": "^0.5.3",
-    "palmtree": "^2.6.0",
-    "performance": "^1.1.1",
-    "prebuild": "^6.1.0",
-    "pstree": "^0.0.1",
-    "qemu": "^2.9.0",
-    "slap": "^0.1.61",
-    "tar-fs": "^1.15.2"
+    "loadtest": "2.3.0",
+    "logon": "0.1.4",
+    "@nodeos/getty": "0.0.0",
+    "node-wget": "0.4.3",
+    "nodeos-cross-toolchain": "1.0.0-RC3.1",
+    "nodeos-nodejs": "8.4.0",
+    "nodeos-reverse-proxy": "0.1.1",
+    "npm": "5.10.0",
+    "bin-nsh": "0.5.2",
+    "ntp-client": "0.5.3",
+    "palmtree": "2.6.0",
+    "performance": "1.4.0",
+    "prebuild": "6.2.2",
+    "pstree": "0.0.1",
+    "qemu": "2.12.0",
+    "slap": "0.1.61",
+    "tar-fs": "1.16.3"
   },
   "description": "Generate a read-write users filesystem for NodeOS for demo purposses",
   "repository": {
