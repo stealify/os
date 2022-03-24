@@ -21,8 +21,8 @@
     "url": "git+https://github.com/NodeOS/nodeos-linux.git"
   },
   "devDependencies": {
-    "buho": "^0.3.4",
-    "nodeos-standard": "^0.3.0"
+    "buho": "0.3.4",
+    "nodeos-standard": "0.3.0"
   },
   "buho": {
     "sha256": "0c3c5f5aae95f81322dd0b289cf8e203d35a9684454ce5a0ab98fa56faec1320",
