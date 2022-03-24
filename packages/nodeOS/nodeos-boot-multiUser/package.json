@@ -1,0 +1,34 @@
+{
+  "name": "nodeos-boot-multiUser",
+  "version": "0.5.3",
+  "description": "Prepare and mount the NodeOS filesystems",
+  "main": "lib",
+  "bin": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NodeOS/nodeos-mount-filesystems.git"
+  },
+  "keywords": [
+    "NodeOS"
+  ],
+  "author": "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NodeOS/nodeos-mount-filesystems/issues"
+  },
+  "homepage": "https://github.com/NodeOS/nodeos-mount-filesystems",
+  "dependencies": {
+    "async": "^2.5.0",
+    "exclfs": "^0.0.5",
+    "jocker": "^0.0.1",
+    "linux-cmdline": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "nodeos-boot-singleUser": "^0.5.2",
+    "nodeos-boot-singleUserMount": "^0.5.2",
+    "nodeos-mount-utils": "^0.2.0",
+    "rimraf": "^2.6.1"
+  }
+}
