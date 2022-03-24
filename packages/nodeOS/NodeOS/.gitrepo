@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/NodeOS
+	branch = master
+	commit = 43f3ddb6153f24ffaa3b1e23abe3cf662624eb2f
+	parent = dbd56e4b0adf726d95725aa15d07a7d5153cc24a
+	method = merge
+	cmdver = 0.4.3
