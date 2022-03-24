@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/sockios
+	branch = master
+	commit = 3ac18308fb7fd63ac5f1957b8137af682cfbdd50
+	parent = e1de37d14273abd6a8eed8aaaaf688da20276085
+	method = merge
+	cmdver = 0.4.3
