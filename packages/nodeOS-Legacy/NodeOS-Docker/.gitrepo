@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/NodeOS-Docker
+	branch = master
+	commit = 7ec2745a681040e06de5a4709228126373d2d102
+	parent = c05b50273b6aeacf69e6a49da3a10acbb022392b
+	method = merge
+	cmdver = 0.4.3
