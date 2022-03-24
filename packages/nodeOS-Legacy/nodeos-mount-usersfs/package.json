@@ -1,0 +1,34 @@
+{
+  "name": "nodeos-mount-usersfs",
+  "version": "0.0.17",
+  "description": "Prepare and mount the NodeOS users filesystem",
+  "main": "index.js",
+  "bin": {
+    "nodeos-mount-usersfs": "index.js",
+    "users-services": "bin/users-services"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NodeOS/nodeos-mount-usersfs.git"
+  },
+  "author": "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NodeOS/nodeos-mount-usersfs/issues"
+  },
+  "homepage": "https://github.com/NodeOS/nodeos-mount-usersfs",
+  "dependencies": {
+    "nodeos-mount-utils": "^0.0.9",
+    "nodeos-mount": "^0.1.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "NodeOS",
+    "mount",
+    "filesystem",
+    "users"
+  ]
+}

@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/nodeos-mount-usersfs
+	branch = master
+	commit = 6ecd8bff3cb75b59a5cbbfb559cc33dd1a9be7ac
+	parent = fe8689ec3c794293efea49b5a048966c55949edf
+	method = merge
+	cmdver = 0.4.3
