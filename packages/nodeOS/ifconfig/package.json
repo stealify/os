@@ -1,0 +1,15 @@
+{
+  "name": "bin-ifconfig",
+  "version": "0.0.0",
+  "description": "command line interface for configuring network interfaces",
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "src-sockios": "NodeOS/sockios",
+    "src-ifaddrs": "NodeOS/node-src-ifaddrs",
+    "src-errno": "NodeOS/node-src-errno"
+  },
+  "bin": {
+    "ifconfig": "ifconfig.js"
+  }
+}
