@@ -1,0 +1,278 @@
+#!/usr/bin/env bash
+
+# This script compiles from scratch a Node.js executable and its needed
+# libraries and shell utils to offer a Node.js REPL from cold boot
+
+set +h
+umask 022
+export LC_ALL=POSIX
+
+# Silence warnings
+export CFLAGS="-w"
+export CXXFLAGS="-w"
+
+
+DEPS=`pwd`/deps
+OUT_DIR=`pwd`
+
+source scripts/adjustEnvVars.sh || exit $?
+
+
+mkdir -p  $TARGET     &&
+ln -sfn . $TARGET/usr || exit 1
+
+if [[ $BITS = 64 ]]; then
+  ln -sfn lib $TARGET/lib64 || exit 2
+fi
+
+
+#
+# Define steps paths
+#
+
+KERNEL_HEADERS=$OUT_DIR/$TARGET/include/linux
+OBJ_BINUTILS=$OBJECTS/binutils
+OBJ_GCC_STATIC=$OBJECTS/gcc_static
+OBJ_MUSL=$OBJECTS/musl
+OBJ_GCC_FINAL=$OBJECTS/gcc_final
+
+
+#
+# Linux kernel headers
+#
+
+SRC_DIR=${LINUX:-`node -p "require('nodeos-linux')"`/linux}
+STEP_DIR=$KERNEL_HEADERS
+
+if [[ ! -d $STEP_DIR ]]; then
+   printf "${WHT}Extracting Linux headers${CLR}${NWL}"
+
+  rmStep $OBJ_BINUTILS
+
+  (
+    cd $SRC_DIR
+
+    # Extract headers
+    $MAKE mrproper                                                     &&
+    $MAKE ARCH=$ARCH headers_check                                     &&
+    $MAKE ARCH=$ARCH INSTALL_HDR_PATH=$OUT_DIR/$TARGET headers_install || exit 10
+  ) || err $?
+
+  printf "${GRN}Successfully extracted Linux headers${CLR}${NWL}"
+fi
+
+#
+# binutils
+#
+
+SRC_DIR=$DEPS/binutils
+STEP_DIR=$OBJ_BINUTILS
+
+if [[ ! -d $STEP_DIR ]]; then
+  printf "${WHT}Compiling binutils${CLR}${NWL}"
+
+  rmStep $OBJ_GCC_STATIC
+
+  (
+    mkdir -p $STEP_DIR &&
+    cd       $STEP_DIR || exit 20
+
+    # Configure
+    $SRC_DIR/configure                  \
+        --silent                        \
+        --prefix=$OUT_DIR               \
+        --target=$TARGET                \
+        --with-sysroot=$OUT_DIR/$TARGET \
+        --disable-werror                \
+        --disable-nls                   \
+        --disable-multilib              || exit 21
+
+    # Compile
+    $MAKE configure-host && $MAKE || exit 22
+
+    # Install
+    $MAKE install || exit 23
+  ) || err $?
+
+  printf "${GRN}Successfully compiled binutils${CLR}${NWL}"
+fi
+
+
+#
+# gcc static
+#
+
+SRC_DIR=$DEPS/gcc
+STEP_DIR=$OBJ_GCC_STATIC
+
+if [[ ! -d $STEP_DIR ]]; then
+  printf "${WHT}Compiling GCC static${CLR}${NWL}"
+
+  rmStep $OBJ_MUSL
+
+  # Fix for arm builds on osx
+  if [[ $(uname -s) = "Darwin" && $ARCH = "arm" ]]; then
+    export CXXFLAGS="$CXXFLAGS -fbracket-depth=512"
+  fi
+
+  (
+    mkdir -p $STEP_DIR &&
+    cd       $STEP_DIR || exit 30
+
+    # Configure
+    $SRC_DIR/configure                        \
+        --silent                              \
+        --prefix=$OUT_DIR                     \
+        --build=$HOST                         \
+        --host=$HOST                          \
+        --target=$TARGET                      \
+        --with-sysroot=$OUT_DIR/$TARGET       \
+        --disable-nls                         \
+        --disable-shared                      \
+        --disable-target-libsanitizer         \
+        --disable-libsanitizer                \
+        --without-headers                     \
+        --with-newlib                         \
+        --disable-decimal-float               \
+        --disable-libgomp                     \
+        --disable-libmudflap                  \
+        --disable-libssp                      \
+        --disable-libatomic                   \
+        --disable-libquadmath                 \
+        --disable-threads                     \
+        --disable-multilib                    \
+        --with-mpfr-include=$SRC_DIR/mpfr/src \
+        --with-mpfr-lib=`pwd`/mpfr/src/.libs  \
+        --with-cpu=$CPU                       \
+        --with-float=$FLOAT_ABI               \
+        --with-fpu=$FPU                       \
+        --enable-languages=c                  || exit 32
+#        -mtune=$TUNE                          \
+
+    # Compile
+    $MAKE all-gcc all-target-libgcc || exit 33
+
+    # Install
+    $MAKE install-gcc install-target-libgcc || exit 34
+  ) || err $?
+
+  export CXXFLAGS="$ORIGINAL_CXXFLAGS"
+
+  printf "${GRN}Successfully compiled GCC static${CLR}${NWL}"
+fi
+
+
+#
+# musl
+#
+
+SRC_DIR=$DEPS/musl
+STEP_DIR=$OBJ_MUSL
+
+if [[ ! -d $STEP_DIR ]]; then
+  printf "${WHT}Compiling musl${CLR}${NWL}"
+
+  rmStep $OBJ_GCC_FINAL
+
+  (
+    PATH=`pwd`/bin:$PATH  # Use the just generated cross-compiler ONLY for musl
+
+    mkdir -p $STEP_DIR || exit 40
+#    cd $STEP_DIR
+    cd $SRC_DIR && $MAKE clean  # musl don't support out-of-tree builds yet
+
+    # Configure
+    CROSS_COMPILE="$TARGET-" \
+    $SRC_DIR/configure       \
+        --silent             \
+        --prefix=/           \
+        --target=$TARGET     \
+        --disable-static     || exit 41
+
+    # Compile
+    CROSS_COMPILE="$TARGET-" $MAKE || exit 42
+
+    # Install
+    DESTDIR=$OUT_DIR/$TARGET $MAKE install || exit 43
+  ) || err $?
+
+  if [[ $CI ]]; then
+    rmStep $OBJ_GCC_STATIC
+  fi
+
+  printf "${GRN}Successfully compiled musl${CLR}${NWL}"
+fi
+
+
+#
+# gcc final
+#
+
+SRC_DIR=$DEPS/gcc
+STEP_DIR=$OBJ_GCC_FINAL
+
+if [[ ! -d $STEP_DIR ]]; then
+  printf "${WHT}Compiling GCC final${CLR}${NWL}"
+
+  if [[ $(uname -s) = "Darwin" && $ARCH = "arm" ]]; then
+    export CXXFLAGS="$CXXFLAGS -fbracket-depth=512"
+  fi
+
+  (
+    mkdir -p $STEP_DIR &&
+    cd       $STEP_DIR || exit 50
+
+    # Configure
+    $SRC_DIR/configure                        \
+        --silent                              \
+        --prefix=$OUT_DIR                     \
+        --build=$HOST                         \
+        --host=$HOST                          \
+        --target=$TARGET                      \
+        --with-sysroot=$OUT_DIR/$TARGET       \
+        --disable-nls                         \
+        --disable-static                      \
+        --enable-c99                          \
+        --enable-long-long                    \
+        --disable-libmudflap                  \
+        --disable-target-libsanitizer         \
+        --disable-libsanitizer                \
+        --disable-multilib                    \
+        --with-mpfr-include=$SRC_DIR/mpfr/src \
+        --with-mpfr-lib=`pwd`/mpfr/src/.libs  \
+        --with-cpu=$CPU                       \
+        --with-float=$FLOAT_ABI               \
+        --with-fpu=$FPU                       \
+        --enable-languages=c,c++              || exit 51
+#        -mtune=$TUNE                          \
+
+    # Compile
+    $MAKE || exit 52
+
+    # Install
+    $MAKE install || exit 53
+  ) || err $?
+
+  export CXXFLAGS="$ORIGINAL_CXXFLAGS"
+
+  printf "${GRN}Successfully compiled GCC final${CLR}${NWL}"
+fi
+
+
+#
+# Remove empty includes and generated docs
+#
+
+rm -rf include                 &&
+rm -rf {,share}/{info,man,doc} || exit 60
+
+
+#
+# Strip libraries and binaries
+#
+
+$STRIP_DEBUG    {,$TARGET/}lib/* > /dev/null
+$STRIP_UNNEEDED {,$TARGET/}bin/* > /dev/null
+$STRIP_UNNEEDED libexec/gcc/$TARGET/*/*{,/*} > /dev/null
+
+exit 0  # Ignore errors from `strip`

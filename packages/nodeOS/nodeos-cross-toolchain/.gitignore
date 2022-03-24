@@ -1,0 +1,11 @@
+build/
+deps/
+node_modules/
+npm-debug.log
+prebuilds/
+
+lib/
+libexec/
+share/
+include/
+*-nodeos-linux-musl*

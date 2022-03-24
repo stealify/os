@@ -1,0 +1,122 @@
+#!/usr/bin/env node
+
+const join = require('path').join
+
+const async   = require('async')
+const fs      = require('fs-extra')
+const manager = require('download-manager')
+
+
+const DEPS='deps'
+const PATCHES='patches'
+
+const options = {path: DEPS}
+
+
+// Source versions
+
+const BINUTILS_VERSION = "2.27"
+const GCC_VERSION      = "5.3.0"
+const MUSL_VERSION     = "1.1.16"
+
+
+// Source URLs
+
+const BINUTILS_URL = "http://ftpmirror.gnu.org/binutils/binutils-"+BINUTILS_VERSION+".tar.gz"
+const GCC_URL      = "http://ftpmirror.gnu.org/gcc/gcc-"+GCC_VERSION+"/gcc-"+GCC_VERSION+".tar.gz"
+const MUSL_URL     = "http://www.musl-libc.org/releases/musl-"+MUSL_VERSION+".tar.gz"
+
+
+// Patch GCC to work with musl
+const GCC_PATCH_URL = 'https://raw.githubusercontent.com/GregorR/musl-cross/master/patches/gcc-'+GCC_VERSION+'-musl.diff'
+
+
+//
+// gcc prerequisites
+//
+
+function download_prerequisites(callback)
+{
+  // Download source code of mpfr, gmp & mpc
+//    contrib/download_prerequisites
+
+  var name = this.name
+
+  // Source versions
+
+  const MPFR_VERSION = "3.1.5"
+  const GMP_VERSION  = "6.1.2"
+  const MPC_VERSION  = "1.0.3"
+
+
+  // Source URLs
+
+  const MPFR_URL = "http://www.mpfr.org/mpfr-"+MPFR_VERSION+"/mpfr-"+MPFR_VERSION+".tar.gz"
+  const GMP_URL  = "https://gmplib.org/download/gmp/gmp-"+GMP_VERSION+".tar.bz2"
+  const MPC_URL  = "https://ftp.gnu.org/gnu/mpc/mpc-"+MPC_VERSION+".tar.gz"
+
+
+  var downloads =
+  [
+    {
+      name: join(name, 'mpfr'),
+      url: MPFR_URL
+    },
+    {
+      name: join(name, 'gmp'),
+      url: GMP_URL
+    },
+    {
+      name: join(name, 'mpc'),
+      url: MPC_URL
+    }
+  ]
+
+
+  manager(downloads, options, callback)
+}
+
+// Copy musl headers for compilation on OS X
+function copy_headers(callback)
+{
+  async.each(require('../resources/darwin-headers.json'),
+  function(file, callback)
+  {
+    fs.copy(DEPS+'/musl/include/'+file, DEPS+'/darwin-musl/'+file, callback)
+  },
+  callback)
+}
+
+//
+// binutils, gcc & musl
+//
+
+var downloads =
+[
+  {
+    name: 'binutils',
+    url: BINUTILS_URL
+  },
+  {
+    name: 'gcc',
+    url: GCC_URL,
+    patch: GCC_PATCH_URL,
+    strip: 1,
+    action: download_prerequisites
+  },
+  {
+    name: 'musl',
+    url: MUSL_URL
+  }
+]
+
+if(process.platform === 'darwin') downloads[2].action = copy_headers
+
+manager(downloads, options, function(error)
+{
+  if(error)
+  {
+    console.trace(error)
+    process.exit(1)
+  }
+})

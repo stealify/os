@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+PRODUCTS=(bin lib libexec prebuilds share *-nodeos-linux-musl*)
+
+rm -rf build/ deps/   || exit 1
+rm -rf ${PRODUCTS[@]} || exit 2
+
+npm run prepublish -- --force || exit 10

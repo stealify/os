@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+
+DOWNLOAD=https://github.com/NodeOS/nodeos-cross-toolchain/releases/download/v{version}/{platform}-{arch}.tar.gz
+
+
+#
+# Download or build cross-toolchain
+#
+
+prebuild-install -d $DOWNLOAD || (buildDependencies && npm run build) || exit 10
+
+#
+# Restore binary symlinks
+#
+
+scripts/symlinks.sh || exit 20
