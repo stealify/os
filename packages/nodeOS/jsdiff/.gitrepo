@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/jsdiff
+	branch = master
+	commit = b9969be97bcb16edb8775b70a15b0f281aa1e9de
+	parent = 7cb675bfdaf943b91a2c56ec875cff38f0850cbe
+	method = merge
+	cmdver = 0.4.3

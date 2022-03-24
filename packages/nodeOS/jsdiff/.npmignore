@@ -1,0 +1,13 @@
+components
+coverage
+src
+tasks
+test
+.eslintrc
+.gitignore
+.travis.yml
+.npmignore
+Gruntfile.js
+index.html
+karma.conf.js
+style.css
