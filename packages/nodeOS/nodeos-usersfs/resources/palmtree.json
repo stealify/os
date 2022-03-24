@@ -1,0 +1,13 @@
+[
+  {
+    "command": "/bin/getty",
+    "args": ["/bin/logon"],
+    "minUptime": 2000,
+    "enabled": true
+  },
+  {
+    "command": "/bin/nodeos-reverse-proxy",
+    "minUptime": 2000,
+    "enabled": true
+  }
+]

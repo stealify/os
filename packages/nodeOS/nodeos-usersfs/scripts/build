@@ -1,0 +1,187 @@
+#!/usr/bin/env bash
+
+GRN="\e[32m"
+CLR="\e[0m"
+
+
+TOOLCHAIN=`node -p "require('nodeos-cross-toolchain')"` || exit 1
+
+source $TOOLCHAIN/scripts/adjustEnvVars.sh &&
+source scripts/utils.sh                    || exit $?
+
+PATH=$TOOLCHAIN/bin:$PATH
+
+
+# Build cross-compiler (if needed)
+(
+  cd $TOOLCHAIN
+  BITS=$BITS CPU=$CPU MACHINE=$MACHINE npm install --production || exit $?
+) || exit $?
+
+
+#
+# Define steps paths
+#
+
+NODE_PLATFORM=linux
+
+OBJ_ROOT=$OBJECTS/root
+OBJ_NODEOS=$OBJECTS/nodeos
+OUT_DIR=`pwd`/out/$CPU.tar.gz
+PREBUILD=prebuilds/$NODE_PLATFORM-$NODE_ARCH.tar.gz
+
+
+#
+# root home
+#
+
+STEP_DIR=$OBJ_ROOT
+
+if [[ ! -d $STEP_DIR ]]; then
+  echo -e "${WHT}Generating root user folder${CLR}"
+
+  # Force re-creation of usersfs
+  rm -rf $OUT_DIR || exit 10
+
+  (
+    mkdir -p $STEP_DIR || exit 11
+
+    #
+    # Install system dependencies
+    #
+
+    PACKAGES=`node -p "require('./package.json').nodeosDependenciesRoot.join(' ')"`
+    eval "$NPMi" -g $PACKAGES || exit 12
+
+
+    #
+    # Services to be started at boot
+    #
+
+    mkdir -p $STEP_DIR/etc                    &&
+    cp resources/palmtree.json $STEP_DIR/etc/ || exit 13
+
+
+    #
+    # Init file for the user
+    #
+
+    ln -sf bin/palmtree $STEP_DIR/init || exit 14
+  ) || err $?
+
+  echo -e "${GRN}Successfully generated root user folder${CLR}"
+fi
+
+
+#
+# nodeos home
+#
+
+STEP_DIR=$OBJ_NODEOS
+
+if [[ ! -d $STEP_DIR ]]; then
+  echo -e "${WHT}Generating nodeos user folder${CLR}"
+
+  # Force re-creation of usersfs
+  rm -rf $OUT_DIR || exit 20
+
+  (
+    mkdir -p $STEP_DIR || exit 21
+
+    #
+    # Install user dependencies
+    #
+
+    PACKAGES=`node -p "require('./package.json').nodeosDependenciesNodeos.join(' ')"`
+    eval "$NPMi" -g $PACKAGES || exit 22
+
+    # Set `nsh` as default `sh` shell
+    ln -s nsh $STEP_DIR/bin/sh || exit 23
+
+
+    #
+    # Copy nodeos user login info
+    #
+
+    mkdir -p $STEP_DIR/etc                  &&
+    cp resources/logon.json  $STEP_DIR/etc/ || exit 24
+
+
+    #
+    # Dummy init file for the user
+    #
+
+    cp resources/init.js $STEP_DIR/init || exit 25
+
+
+    #
+    # blessed-contrib examples
+    #
+
+    BLESSED_URL=https://github.com/yaronn/blessed-contrib/archive/master.tar.gz
+    SRC_DIR=$STEP_DIR/blessed-contrib
+
+    mkdir -p $SRC_DIR                                                 &&
+    curl -L $BLESSED_URL | tar xzf - -C $SRC_DIR --strip-components=1 &&
+    (
+      cd $SRC_DIR
+
+      eval "$NPMi" || exit 26
+    ) || exit $?
+
+
+    # #
+    # # node-canvas examples
+    # #
+    #
+    # CANVAS_URL=https://github.com/NodeOS/node-canvas/archive/master.tar.gz
+    # SRC_DIR=$OBJ_DIR/node-canvas
+    #
+    # mkdir -p $SRC_DIR                                                &&
+    # curl -L $CANVAS_URL | tar xzf - -C $SRC_DIR --strip-components=1 &&
+    # (
+    #   cd $SRC_DIR
+    #
+    #   eval "$NPMi" --has_cairo=false --has_X11=false || exit 27
+    # ) || exit $?
+  ) || err $?
+
+  echo -e "${GRN}Successfully generated nodeos user folder${CLR}"
+fi
+
+
+#
+# Wrap the system up and pack it
+#
+
+STEP_DIR=$OUT_DIR
+
+if [[ ! -f $STEP_DIR ]]; then
+  rmStep $PREBUILD
+
+  mkdir -p `dirname $STEP_DIR`
+
+  scripts/pack.js "$OBJECTS" nodeos 1 1 | gzip > $STEP_DIR || err 30
+fi
+
+
+#
+# Update latest build
+#
+
+ln -sf $CPU.tar.gz out/latest || err 40
+
+
+echo -e "${GRN}Successfully built Layer-3 image 'usersfs'${CLR}"
+
+
+#
+# Pack `nodeos-usersfs` in a node-gyp compatible way
+#
+
+# TODO use Node.js arch instead of explicit CPUs and move to BigRedButton
+
+STEP_DIR=$PREBUILD
+
+mkdir -p `dirname $STEP_DIR`          &&
+tar -cf - out/$CPU.tar.gz out/latest | gzip > $STEP_DIR || err 100
