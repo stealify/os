@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/vinyl-fs
+	branch = master
+	commit = 7cee24e7d53e20aca890b818f92268a2984fc793
+	parent = 606e3c5222cc1d354f3c7432e20a7cdf5cec560b
+	method = merge
+	cmdver = 0.4.3
