@@ -15,7 +15,7 @@
   "license": "MIT",
   "peerDependencies": {
     "nodeos-barebones": "1.0.0-RC2.3",
-    "nodeos-initramfs": "1.0.0-RC2.4"
+    "nodeos-initramfs": "1.0.0-RC3.2"
   },
   "dependencies": {
     "nodeos-cross-toolchain": "^1.0.0-RC2.11",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "nodeos-barebones": "1.0.0-RC2.3",
-    "nodeos-initramfs": "1.0.0-RC2.4",
+    "nodeos-initramfs": "1.0.0-RC3.2",
     "qemu": "NodeOS/qemu"
   },
   "description": "Generate a bootable NodeOS disk image",
