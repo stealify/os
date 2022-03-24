@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/cjktty-patch
+	branch = master
+	commit = 2e69222acbb66244278b534331f76ce1564f5832
+	parent = ff1d48e9dd046b996cf62b1264fbb2b1078c42ce
+	method = merge
+	cmdver = 0.4.3
