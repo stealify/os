@@ -1,0 +1,14 @@
+{
+  "name": "unistd",
+  "version": "0.0.0",
+  "description": "`unistd` for NodeOS / Linux",
+  "main": "build/Release/binding.node",
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "contributors": [
+    "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+     "nan": "^2.5.1"
+  }
+}
