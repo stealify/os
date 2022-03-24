@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/node-src-errno
+	branch = master
+	commit = dca18cbe4ec592048ee34b8b65779f2af896e5de
+	parent = f6be9f8aaee76b1e935419388b20dbf49c3e8a5c
+	method = merge
+	cmdver = 0.4.3
