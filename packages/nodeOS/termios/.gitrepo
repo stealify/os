@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS/termios
+	branch = master
+	commit = 3aff728eb7e53825c045ee72b7ed29077de80e06
+	parent = 42c885010582c4b453b90471c6196b0d11b2407a
+	method = merge
+	cmdver = 0.4.3

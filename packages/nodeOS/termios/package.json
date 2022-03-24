@@ -1,0 +1,27 @@
+{
+  "name": "@nodeos/termios",
+  "version": "0.0.0",
+  "description": "NodeOS termios terminal controller replacement",
+  "main": "build/Release/binding.node",
+  "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "contributors": [
+    "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.6.2"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "gypfile": true,
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeOS/termios.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NodeOS/termios/issues"
+  },
+  "homepage": "https://github.com/NodeOS/termios#readme"
+}
