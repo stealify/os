@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/node-npkg
+	branch = master
+	commit = f9973f31858b8636cd412c47cd86768600afebf1
+	parent = 2e3fd6d1d2309f3e719a5d7e23c163621b87b62b
+	method = merge
+	cmdver = 0.4.3
