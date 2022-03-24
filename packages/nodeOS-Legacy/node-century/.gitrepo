@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/NodeOS-Legacy/node-century
+	branch = master
+	commit = a882cb14398c8f3e4dfd5cb6f7b731f2190ebace
+	parent = 7a268d504714001a9cb8d519e683263cf34e29c1
+	method = merge
+	cmdver = 0.4.3
