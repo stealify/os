@@ -6,7 +6,7 @@
   "license": "MIT",
   "bin": "server.js",
   "dependencies": {
-    "async": "2.6.3",
+    "async": "2.6.4",
     "dateformat": "2.2.0",
     "fs-extra": "1.0.0",
     "github": "7.3.2",
