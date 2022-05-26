@@ -16,6 +16,6 @@
     "lib-mkdirp": "0.0.0"
   },
   "peerDependencies": {
-    "bin-init": "~0.1.0"
+    "bin-init": "~0.1.0 || ~0.2.0"
   }
 }
