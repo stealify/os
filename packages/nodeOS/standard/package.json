@@ -28,7 +28,7 @@
     "mkdirp": "0.5.6",
     "run-parallel-limit": "1.1.0",
     "standard-packages": "3.10.0",
-    "tape": "4.15.0"
+    "tape": "4.15.1"
   },
   "homepage": "http://standardjs.com",
   "keywords": [
