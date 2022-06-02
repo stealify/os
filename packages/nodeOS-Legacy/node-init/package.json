@@ -9,7 +9,7 @@
   "author": "Jacob Groundwater <groundwater@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "concat-stream": "1.0.1",
+    "concat-stream": "1.6.2",
     "src-sockios": "0.0.0",
     "restify": "2.6.3"
   }
