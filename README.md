@@ -7,4 +7,5 @@ ECMAScript Written Operating System with full Desktop and Mobile Support as also
 - We Take Over the Complet NodeOS Org update it and also will integrate Support for other Kernels.
 
 ## Roadmap
-- [ ] - Wait till b8g component builds work with justjs 
+- [ ] - Wait till runner/posix, runner/fifo-fileHandle runner/fifo-dirHandle pm2 can be used until then for development! 
+  - [ ] - Wait till b8g component builds work with justjs 
