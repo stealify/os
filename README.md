@@ -9,3 +9,8 @@ ECMAScript Written Operating System with full Desktop and Mobile Support as also
 ## Roadmap
 - [ ] - Wait till runner/posix, runner/fifo-fileHandle runner/fifo-dirHandle pm2 can be used until then for development! 
   - [ ] - Wait till b8g component builds work with justjs 
+- [ ] - Minimal Bootable System
+  - [ ] - Minimal Bootable SystemD (UEFI Support and other Stuff is integrated into SystemD its part of the Kernel)
+  - [ ] - Stealify Component Manager using Scheduler / Tasks / Runner
+    - [ ] - linux posix Systemd/dbus bindings, Windows Bindings, macOs-bindings ios-runner, android-runner (GraalVM)
+
